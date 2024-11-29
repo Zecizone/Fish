@@ -29,9 +29,9 @@ export const createTask = async (newTask, setTasks, setNewTask) => {
 };
 
 export const completeTask = async (taskId) => {
+    const completedDate = new Date();
     try {
-        const completedDate = new Date();
-        await axios.post(`http://localhost:5000/tasks/${taskId}/complete`, { completedDate }); // Отправляем дату завершения
+        await axios.post(`http://localhost:5000/tasks/${taskId}/complete`, { completedDate });
     } catch (error) {
         console.error("Ошибка при завершении задачи:", error);
     }
@@ -42,6 +42,15 @@ export const deleteTask = async (taskId) => {
         await axios.delete(`http://localhost:5000/tasks/${taskId}`);
     } catch (error) {
         console.error("Ошибка при удалении задачи:", error);
+    }
+};
+
+export const editTask = async (taskId, updatedTask, setTasks) => {
+    try {
+        const response = await axios.put(`http://localhost:5000/tasks/${taskId}`, updatedTask);
+        setTasks((prev) => prev.map(task => (task.id === response.data.id ? response.data : task)));
+    } catch (error) {
+        console.error("Ошибка при редактировании задачи:", error);
     }
 };
 

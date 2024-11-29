@@ -8,9 +8,21 @@ const TaskForm = ({ newTask, setNewTask, handleCreateTask, filter, setFilter }) 
     };
 
     return (
-        <Box mb={2}>
-            <Typography variant="h6">Создать новую задачу</Typography>
-            <form onSubmit={handleSubmit}>
+        <Box 
+            mb={2} 
+            sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                padding: { xs: 2, sm: 3 },
+                maxWidth: '600px',
+                margin: '0 auto', 
+            }}
+        >
+            <Typography variant="h5" sx={{ marginBottom: 2 }}>
+                Создать новую задачу
+            </Typography>
+            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                 <TextField
                     label="Название"
                     variant="outlined"
@@ -36,7 +48,7 @@ const TaskForm = ({ newTask, setNewTask, handleCreateTask, filter, setFilter }) 
                     margin="normal"
                     InputLabelProps={{ shrink: true }}
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 }}>
                     Добавить задачу
                 </Button>
             </form>

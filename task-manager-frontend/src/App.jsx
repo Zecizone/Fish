@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TaskForm from './components/TaskForm/TaskForm';
 import TaskList from './components/TaskList/TaskList';
 import TaskCanvas from './components/TaskCanvas/TaskCanvas';
 import { Box } from '@mui/material';
-import { loadTasks, createTask, completeTask, deleteTask, setupSocketListeners, handleDragEnd } from './services/taskService';
+import { loadTasks, setupSocketListeners, handleDragEnd, createTask, completeTask, deleteTask, editTask } from './services/taskService';
 import { v4 as uuidv4 } from 'uuid';
 
 const App = () => {
@@ -22,26 +22,9 @@ const App = () => {
         if (newTask.title && newTask.description && newTask.dueDate) {
             const taskWithId = { ...newTask, id: uuidv4() };
             createTask(taskWithId, setTasks, setNewTask);
-            setNewTask({ title: '', description: '', dueDate: '' });
         } else {
             console.log('Пожалуйста, заполните все поля задачи.');
         }
-    };
-
-    const handleCompleteTask = (taskId) => {
-        const completedDate = new Date();
-        setTasks(prevTasks => 
-            prevTasks.map(task => 
-                task.id === taskId 
-                    ? { ...task, completed: true, completedDate }
-                    : task
-            )
-        );
-        completeTask(taskId, completedDate);
-    };
-
-    const handleDeleteTask = (taskId) => {
-        deleteTask(taskId);
     };
 
     const onDragEnd = (result) => {
@@ -49,9 +32,37 @@ const App = () => {
     };
 
     return (
-        <Box display="flex" flexDirection="column" p={2}>
-            <TaskForm newTask={newTask} setNewTask={setNewTask} handleCreateTask={handleCreateTask} filter={filter} setFilter={setFilter} />
-            <TaskList tasks={tasks} handleCompleteTask={handleCompleteTask} handleDeleteTask={handleDeleteTask} filter={filter} handleDragEnd={onDragEnd} />
+        <Box 
+            display="flex" 
+            p={2} 
+            sx={{ 
+                flexDirection: { xs: 'column', sm: 'row' },
+            }}
+        >
+            <Box 
+                display="flex" 
+                flexDirection="column" 
+                p={2}
+                sx={{ 
+                    width: { xs: '100%', sm: 'auto' },
+                }}
+            >
+                <TaskForm 
+                    newTask={newTask} 
+                    setNewTask={setNewTask} 
+                    handleCreateTask={handleCreateTask} 
+                    filter={filter} 
+                    setFilter={setFilter} 
+                />
+                <TaskList 
+                    tasks={tasks} 
+                    handleCompleteTask={completeTask}
+                    handleDeleteTask={deleteTask}
+                    handleEditTask={editTask}
+                    filter={filter} 
+                    handleDragEnd={onDragEnd} 
+                />
+            </Box>
             <TaskCanvas tasks={tasks} />
         </Box>
     );

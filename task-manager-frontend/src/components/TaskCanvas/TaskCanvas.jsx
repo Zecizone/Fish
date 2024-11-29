@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as fabric from 'fabric';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 const TaskCanvas = ({ tasks }) => {
     const canvasRef = useRef(null);
@@ -59,12 +59,32 @@ const TaskCanvas = ({ tasks }) => {
     };
 
     return (
-        <div>
-            <Typography variant="h5" style={{ marginBottom: '16px', textAlign: 'center' }}>
+        <Box 
+            sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                margin: '16px', 
+                '@media (max-width:600px)': {
+                    margin: '8px',
+                },
+            }}
+        >
+            <Typography variant="h5" sx={{ marginBottom: '16px', textAlign: 'center' }}>
                 Интерактивный Канвас Задач
             </Typography>
-            <canvas ref={canvasRef} style={{ border: '1px solid black' }} />
-        </div>
+            <Box 
+                component="canvas" 
+                ref={canvasRef} 
+                sx={{ 
+                    border: '1px solid black', 
+                    width: '100%', 
+                    maxWidth: '600px',
+                    height: { xs: '300px', sm: '400px', md: '500px' },
+                    aspectRatio: '1 / 1',
+                }} 
+            />
+        </Box>
     );
 };
 
