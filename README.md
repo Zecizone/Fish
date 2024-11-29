@@ -3,7 +3,7 @@
 1.Скопируйте репозиторий git clone https://github.com/Zecizone/Fish.git  
 2.Перейдите в папку сервера cd task-manager-backend  
 3.Введите npm install  
-4.Перейдите в папку клиентской части св task-manager-frontend  
+4.Перейдите в папку клиентской части cd task-manager-frontend  
 5.Введите npm install  
 6.Убедитесь что порты 3000 и 5000 не заняты другими вашими проектами  
 
