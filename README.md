@@ -12,4 +12,3 @@
 - клиентску часть npm run dev
 
 
-https://github.com/UntronixLabProject/IQT-Task
